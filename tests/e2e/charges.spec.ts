@@ -33,13 +33,15 @@ test("charges rolling window and mark-paid golden path", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "Maria Teste" })).toBeVisible();
 
   // Hoje now shows one charge due today
-  await page.getByRole("link", { name: "Hoje" }).click();
+  await page.getByRole("link", { name: "Hoje", exact: true }).first().click();
   await expect(page).toHaveURL(/\/hoje$/);
   await expect(page.getByText("Maria Teste")).toBeVisible();
   await expect(page.getByText("R$ 200,00").first()).toBeVisible();
 
-  // Mark the charge as paid
-  await page.getByRole("button", { name: "Pago" }).first().click();
+  // Mark the charge as paid via the Ações dropdown
+  await page.getByRole("button", { name: "Ações" }).first().click();
+  await expect(page.getByRole("menuitem", { name: "Marcar pago" })).toBeVisible();
+  await page.getByRole("menuitem", { name: "Marcar pago" }).click();
   await page.getByRole("button", { name: "Confirmar" }).click();
 
   // The row should disappear from Hoje

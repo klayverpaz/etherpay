@@ -18,7 +18,7 @@ test("sign-up then create client golden path", async ({ page }) => {
   await expect(page).toHaveURL(/\/hoje$/);
 
   // Navigate to clientes — empty state visible
-  await page.getByRole("link", { name: "Clientes", exact: true }).click();
+  await page.getByRole("link", { name: "Clientes", exact: true }).first().click();
   await expect(page).toHaveURL(/\/clientes$/);
   await expect(page.getByText("Nenhum cliente ainda")).toBeVisible();
 
