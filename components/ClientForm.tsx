@@ -87,11 +87,7 @@ export function ClientForm({ defaultValues, onSubmit, submitLabel }: Props) {
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-2">
           <Label>A cada</Label>
-          <Input
-            type="number"
-            min={1}
-            {...form.register("cycle_every", { valueAsNumber: true })}
-          />
+          <Input type="number" min={1} {...form.register("cycle_every", { valueAsNumber: true })} />
         </div>
         <div className="space-y-2">
           <Label>Período</Label>
