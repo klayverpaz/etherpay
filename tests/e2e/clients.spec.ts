@@ -15,9 +15,11 @@ test("sign-up then create client golden path", async ({ page }) => {
   await page.getByLabel("E-mail").fill(email);
   await page.getByLabel("Senha").fill(password);
   await page.getByRole("button", { name: /Entrar/ }).click();
-  await expect(page).toHaveURL(/\/clientes$/);
+  await expect(page).toHaveURL(/\/hoje$/);
 
-  // Empty state visible
+  // Navigate to clientes — empty state visible
+  await page.getByRole("link", { name: "Clientes", exact: true }).click();
+  await expect(page).toHaveURL(/\/clientes$/);
   await expect(page.getByText("Nenhum cliente ainda")).toBeVisible();
 
   // Create a client
