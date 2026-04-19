@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-test("landing page loads", async ({ page }) => {
+test("unauthenticated root redirects to sign-in", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator("body")).toBeVisible();
+  await expect(page).toHaveURL(/\/sign-in$/);
+  await expect(page.getByRole("heading", { name: "Entrar" })).toBeVisible();
 });
