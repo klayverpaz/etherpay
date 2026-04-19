@@ -1,0 +1,332 @@
+<h2>Screens & navigation — v1</h2>
+<p class="subtitle">Four bottom tabs. The "Hoje" tab is the app's center of gravity — what opens when the trainer launches the app.</p>
+
+<style>
+  .phones {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 18px;
+  }
+  .phone {
+    border: 2px solid var(--border, #333);
+    border-radius: 24px;
+    background: var(--surface, #1a1a1a);
+    overflow: hidden;
+    padding: 0;
+    font-size: 11px;
+  }
+  .phone-header {
+    background: #2a2a2a;
+    padding: 10px 12px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .phone-body {
+    padding: 10px 12px;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .phone-tabs {
+    display: flex;
+    border-top: 1px solid #333;
+    background: #181818;
+  }
+  .phone-tabs .tab {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0;
+    opacity: 0.55;
+    font-size: 10px;
+  }
+  .phone-tabs .tab.active { opacity: 1; color: #4fa3ff; font-weight: 600; }
+  .row {
+    background: #242424;
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+  }
+  .row.overdue { border-left: 3px solid #e53e3e; }
+  .row.today   { border-left: 3px solid #f59e0b; }
+  .row.paid    { border-left: 3px solid #16a34a; opacity: 0.7; }
+  .pill {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background: #444;
+  }
+  .pill.overdue { background: #7f1d1d; color: #fca5a5; }
+  .pill.today   { background: #78350f; color: #fcd34d; }
+  .pill.paid    { background: #14532d; color: #86efac; }
+  .banner {
+    background: #1e3a8a;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #dbeafe;
+  }
+  .banner .big { font-size: 18px; font-weight: 700; }
+  .fab {
+    position: relative;
+    align-self: flex-end;
+    background: #2563eb;
+    color: white;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+  }
+  .caption {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--muted, #999);
+    line-height: 1.4;
+  }
+  .bar {
+    background: #2563eb;
+    height: 16px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+  }
+  .bar.small  { width: 40%; }
+  .bar.med    { width: 70%; }
+  .bar.large  { width: 95%; background: #60a5fa; }
+  .muted { color: #888; font-size: 10px; }
+  .amount { font-weight: 700; }
+</style>
+
+<div class="phones">
+
+  <!-- Phone 1: Hoje -->
+  <div class="phone">
+    <div class="phone-header"><span>Hoje</span><span>⚙</span></div>
+    <div class="phone-body">
+      <div class="banner">
+        <div class="muted">19 de Abril</div>
+        <div class="big">2 cobranças hoje</div>
+        <div>R$ 280,00 · 3 em atraso</div>
+      </div>
+      <div class="muted" style="margin-top:6px">EM ATRASO</div>
+      <div class="row overdue">
+        <div>
+          <div style="font-weight:600">João Silva</div>
+          <div class="muted">Venceu em 10/04</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 150</div>
+          <div class="pill overdue">atrasado</div>
+        </div>
+      </div>
+      <div class="row overdue">
+        <div>
+          <div style="font-weight:600">Pedro Costa</div>
+          <div class="muted">Venceu em 12/04</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 120</div>
+          <div class="pill overdue">atrasado</div>
+        </div>
+      </div>
+      <div class="muted" style="margin-top:6px">HOJE</div>
+      <div class="row today">
+        <div>
+          <div style="font-weight:600">Marcos R.</div>
+          <div class="muted">Vence hoje</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 140</div>
+          <div class="pill today">hoje</div>
+        </div>
+      </div>
+      <div class="row today">
+        <div>
+          <div style="font-weight:600">Ana P.</div>
+          <div class="muted">Vence hoje</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 140</div>
+          <div class="pill today">hoje</div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-tabs">
+      <div class="tab active">Hoje</div>
+      <div class="tab">Pagadores</div>
+      <div class="tab">Relatórios</div>
+      <div class="tab">Ajustes</div>
+    </div>
+  </div>
+
+  <!-- Phone 2: Charge detail -->
+  <div class="phone">
+    <div class="phone-header"><span>← Cobrança</span><span>⋮</span></div>
+    <div class="phone-body">
+      <div style="font-weight:700;font-size:14px">João Silva</div>
+      <div class="muted">+55 11 98765‑4321</div>
+
+      <div style="margin-top:10px" class="muted">VALOR</div>
+      <div class="row" style="justify-content:flex-start">
+        <div class="amount" style="font-size:18px">R$ 150,00</div>
+        <div class="muted" style="margin-left:auto">editar</div>
+      </div>
+
+      <div class="muted">VENCIMENTO</div>
+      <div class="row" style="justify-content:flex-start">10/04/2026 · <span class="pill overdue" style="margin-left:auto">atrasado</span></div>
+
+      <div class="muted" style="margin-top:8px">AÇÕES</div>
+      <div style="background:#16a34a;color:white;padding:10px;border-radius:8px;text-align:center;font-weight:600">✓ Marcar como pago</div>
+      <div style="background:#25D366;color:white;padding:10px;border-radius:8px;text-align:center;font-weight:600">📋 Copiar mensagem WhatsApp</div>
+      <div style="background:#374151;color:white;padding:10px;border-radius:8px;text-align:center">📎 Anexar comprovante</div>
+
+      <div class="muted" style="margin-top:8px">ANEXOS (0)</div>
+      <div class="placeholder" style="padding:12px;text-align:center;border:1px dashed #444;border-radius:6px;font-size:10px">Nenhum anexo</div>
+    </div>
+    <div class="phone-tabs">
+      <div class="tab active">Hoje</div>
+      <div class="tab">Pagadores</div>
+      <div class="tab">Relatórios</div>
+      <div class="tab">Ajustes</div>
+    </div>
+  </div>
+
+  <!-- Phone 3: Pagadores list -->
+  <div class="phone">
+    <div class="phone-header"><span>Pagadores</span><span>🔍</span></div>
+    <div class="phone-body">
+      <div style="background:#242424;border-radius:8px;padding:8px 10px;color:#888">Buscar…</div>
+
+      <div class="row">
+        <div>
+          <div style="font-weight:600">Ana P.</div>
+          <div class="muted">Mensal · dia 5</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 140</div>
+          <div class="muted">próx: 05/05</div>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div style="font-weight:600">João Silva</div>
+          <div class="muted">Mensal · dia 10</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 150</div>
+          <div class="muted">atrasado</div>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div style="font-weight:600">Marcos R.</div>
+          <div class="muted">Mensal · dia 19</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 140</div>
+          <div class="muted">hoje</div>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div style="font-weight:600">Pedro Costa</div>
+          <div class="muted">Semanal · seg</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 120</div>
+          <div class="muted">atrasado</div>
+        </div>
+      </div>
+
+      <div style="flex:1"></div>
+      <div class="fab">＋</div>
+    </div>
+    <div class="phone-tabs">
+      <div class="tab">Hoje</div>
+      <div class="tab active">Pagadores</div>
+      <div class="tab">Relatórios</div>
+      <div class="tab">Ajustes</div>
+    </div>
+  </div>
+
+  <!-- Phone 4: Reports -->
+  <div class="phone">
+    <div class="phone-header"><span>Relatórios</span><span>⋮</span></div>
+    <div class="phone-body">
+      <div class="banner" style="background:#064e3b">
+        <div class="muted">ABRIL 2026 (este mês)</div>
+        <div class="big">R$ 1.420,00</div>
+        <div>recebido · R$ 390 pendente</div>
+      </div>
+
+      <div class="muted" style="margin-top:6px">HISTÓRICO</div>
+
+      <div class="row">
+        <div>
+          <div style="font-weight:600">Março 2026</div>
+          <div class="muted">12 pagamentos</div>
+        </div>
+        <div class="amount">R$ 1.680</div>
+      </div>
+      <div class="row">
+        <div>
+          <div style="font-weight:600">Fevereiro 2026</div>
+          <div class="muted">11 pagamentos</div>
+        </div>
+        <div class="amount">R$ 1.540</div>
+      </div>
+      <div class="row">
+        <div>
+          <div style="font-weight:600">Janeiro 2026</div>
+          <div class="muted">10 pagamentos</div>
+        </div>
+        <div class="amount">R$ 1.400</div>
+      </div>
+
+      <div class="muted" style="margin-top:10px">Toque em um mês para ver o detalhe por pagador.</div>
+    </div>
+    <div class="phone-tabs">
+      <div class="tab">Hoje</div>
+      <div class="tab">Pagadores</div>
+      <div class="tab active">Relatórios</div>
+      <div class="tab">Ajustes</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:26px">
+  <h3>Navigation structure</h3>
+  <p>Bottom tab bar (4 tabs). Each tab owns a stack navigator:</p>
+  <ul>
+    <li><strong>Hoje</strong> → Detalhe da cobrança → Editar pagador</li>
+    <li><strong>Pagadores</strong> → Detalhe do pagador (histórico de cobranças) → Detalhe da cobrança → Novo/Editar pagador</li>
+    <li><strong>Relatórios</strong> → Detalhe do mês (breakdown por pagador)</li>
+    <li><strong>Ajustes</strong> → Editar template · Notificações · Conta/Sair</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h3>First-run flow (new install)</h3>
+  <ol>
+    <li>Splash → <strong>Entrar / Criar conta</strong> (Supabase: email/senha + Google sign-in)</li>
+    <li>Pedir permissão de notificações (OS prompt)</li>
+    <li>Hoje em estado vazio → botão grande "Adicionar primeiro pagador"</li>
+    <li>Formulário novo pagador → salva → gera a janela rolante de cobranças</li>
+    <li>Volta ao Hoje, agora com dados</li>
+  </ol>
+</div>
+
+<div class="section">
+  <h3>Key interaction details</h3>
+  <ul>
+    <li><strong>Copiar mensagem WhatsApp</strong> — preenche placeholders <code>{nome}</code>, <code>{valor}</code>, <code>{vencimento}</code> e copia para a área de transferência; opcionalmente abre <code>whatsapp://send?phone=...&amp;text=...</code> deep link direto para o chat do pagador.</li>
+    <li><strong>Marcar como pago</strong> — abre uma pequena folha (sheet) com data, valor recebido (pré‑preenchido), método opcional (PIX/dinheiro/transferência), opção de anexar comprovante. Fecha e gera a próxima cobrança na janela rolante.</li>
+    <li><strong>Swipe-actions na lista</strong> — arrastar para a direita: marcar pago. Arrastar para a esquerda: copiar mensagem. Reduz toques no dia‑a‑dia.</li>
+    <li><strong>Badge numérico</strong> no ícone do app (iOS) e na aba Hoje com contagem de hoje+atrasados.</li>
+  </ul>
+</div>

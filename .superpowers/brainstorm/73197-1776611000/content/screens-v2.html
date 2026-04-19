@@ -1,0 +1,242 @@
+<h2>Ajustes aplicados + escolha do nome</h2>
+<p class="subtitle">Mudanças: banner reescrito, "Notificar pelo Whatsapp", campo de observações na cobrança, anexos com foco em imagens. Abaixo, três opções de palavra no lugar de "Pagadores".</p>
+
+<style>
+  .phones {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 18px;
+  }
+  .phone {
+    border: 2px solid #333;
+    border-radius: 24px;
+    background: #1a1a1a;
+    overflow: hidden;
+    padding: 0;
+    font-size: 11px;
+    color: #e0e0e0;
+  }
+  .phone-header {
+    background: #2a2a2a;
+    padding: 10px 12px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .phone-body {
+    padding: 10px 12px;
+    min-height: 460px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .phone-tabs {
+    display: flex;
+    border-top: 1px solid #333;
+    background: #181818;
+  }
+  .phone-tabs .tab {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0;
+    opacity: 0.55;
+    font-size: 10px;
+  }
+  .phone-tabs .tab.active { opacity: 1; color: #4fa3ff; font-weight: 600; }
+  .row {
+    background: #242424;
+    border-radius: 8px;
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+  }
+  .row.overdue { border-left: 3px solid #e53e3e; }
+  .row.today   { border-left: 3px solid #f59e0b; }
+  .pill { font-size: 9px; padding: 2px 6px; border-radius: 10px; background: #444; }
+  .pill.overdue { background: #7f1d1d; color: #fca5a5; }
+  .pill.today   { background: #78350f; color: #fcd34d; }
+  .banner {
+    background: #1e3a8a;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #dbeafe;
+  }
+  .banner .big { font-size: 16px; font-weight: 700; margin-top: 2px; }
+  .banner .overdue-line {
+    background: #7f1d1d;
+    color: #fecaca;
+    padding: 6px 8px;
+    margin-top: 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .muted { color: #888; font-size: 10px; }
+  .amount { font-weight: 700; }
+  .field-label { font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 6px; }
+  .field {
+    background: #242424;
+    border-radius: 8px;
+    padding: 8px 10px;
+    min-height: 22px;
+  }
+  .field.multiline { min-height: 60px; color: #ccc; }
+  .attachment-tile {
+    background: #1f1f1f;
+    border: 1px dashed #444;
+    border-radius: 6px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    color: #999;
+  }
+</style>
+
+<div class="phones">
+
+  <!-- Phone 1: Hoje (updated banner) -->
+  <div class="phone">
+    <div class="phone-header"><span>Hoje</span><span>⚙</span></div>
+    <div class="phone-body">
+      <div class="banner">
+        <div class="muted">19 de Abril</div>
+        <div class="big">2 cobranças hoje · R$ 280,00</div>
+        <div class="overdue-line">Valor a receber em atraso: R$ 390 (3 em atraso)</div>
+      </div>
+
+      <div class="muted" style="margin-top:6px">EM ATRASO</div>
+      <div class="row overdue">
+        <div>
+          <div style="font-weight:600">João Silva</div>
+          <div class="muted">Venceu em 10/04</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 150</div>
+          <div class="pill overdue">atrasado</div>
+        </div>
+      </div>
+      <div class="row overdue">
+        <div>
+          <div style="font-weight:600">Pedro Costa</div>
+          <div class="muted">Venceu em 12/04</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 120</div>
+          <div class="pill overdue">atrasado</div>
+        </div>
+      </div>
+
+      <div class="muted" style="margin-top:6px">HOJE</div>
+      <div class="row today">
+        <div>
+          <div style="font-weight:600">Marcos R.</div>
+          <div class="muted">Vence hoje</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 140</div>
+          <div class="pill today">hoje</div>
+        </div>
+      </div>
+      <div class="row today">
+        <div>
+          <div style="font-weight:600">Ana P.</div>
+          <div class="muted">Vence hoje</div>
+        </div>
+        <div style="text-align:right">
+          <div class="amount">R$ 140</div>
+          <div class="pill today">hoje</div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-tabs">
+      <div class="tab active">Hoje</div>
+      <div class="tab">[nome]</div>
+      <div class="tab">Relatórios</div>
+      <div class="tab">Ajustes</div>
+    </div>
+  </div>
+
+  <!-- Phone 2: Charge detail (with notes + image-first attachments + renamed button) -->
+  <div class="phone">
+    <div class="phone-header"><span>← Cobrança</span><span>⋮</span></div>
+    <div class="phone-body">
+      <div style="font-weight:700;font-size:14px">João Silva</div>
+      <div class="muted">+55 11 98765‑4321</div>
+
+      <div class="field-label">VALOR</div>
+      <div class="field" style="display:flex;justify-content:space-between">
+        <span class="amount" style="font-size:16px">R$ 150,00</span>
+        <span class="muted">editar</span>
+      </div>
+
+      <div class="field-label">VENCIMENTO</div>
+      <div class="field" style="display:flex;justify-content:space-between">
+        <span>10/04/2026</span>
+        <span class="pill overdue">atrasado</span>
+      </div>
+
+      <div class="field-label">OBSERVAÇÕES</div>
+      <div class="field multiline">Pagou R$ 50 adiantados no último treino, desconta neste.</div>
+
+      <div class="field-label" style="margin-top:10px">AÇÕES</div>
+      <div style="background:#16a34a;color:white;padding:9px;border-radius:8px;text-align:center;font-weight:600">✓ Marcar como pago</div>
+      <div style="background:#25D366;color:white;padding:9px;border-radius:8px;text-align:center;font-weight:600;margin-top:6px">💬 Notificar pelo Whatsapp</div>
+      <div style="background:#374151;color:white;padding:9px;border-radius:8px;text-align:center;margin-top:6px">📷 Anexar comprovante (foto)</div>
+
+      <div class="field-label" style="margin-top:10px">COMPROVANTES (2)</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+        <div class="attachment-tile" style="background:linear-gradient(135deg,#334155,#475569);border-style:solid;color:#ddd;min-height:60px;justify-content:center">🖼<br>foto</div>
+        <div class="attachment-tile" style="background:linear-gradient(135deg,#334155,#475569);border-style:solid;color:#ddd;min-height:60px;justify-content:center">🖼<br>foto</div>
+        <div class="attachment-tile" style="min-height:60px;justify-content:center">＋<br>adicionar</div>
+      </div>
+    </div>
+    <div class="phone-tabs">
+      <div class="tab active">Hoje</div>
+      <div class="tab">[nome]</div>
+      <div class="tab">Relatórios</div>
+      <div class="tab">Ajustes</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section" style="margin-top:28px">
+  <h3>Qual palavra usar no lugar de "Pagadores"?</h3>
+  <p class="subtitle">A aba e os textos do app usarão esta palavra. O nome no código/banco de dados acompanha a escolha (ex.: tabela <code>clients</code> / <code>contacts</code>).</p>
+</div>
+
+<div class="options">
+  <div class="option" data-choice="clientes" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Clientes</h3>
+      <p>Genérico e natural em PT-BR. Funciona para qualquer tipo de cobrança recorrente (aluno, inquilino, cliente de serviço, etc). Tabela no código: <code>clients</code>. Recomendado.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="contatos" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Contatos</h3>
+      <p>Mais neutro ainda — lembra agenda de contatos. Bom se a ideia é que a cobrança é um aspecto secundário do registro. Tabela: <code>contacts</code>.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="cadastros" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Cadastros</h3>
+      <p>Muito neutro e comum em apps brasileiros. Transmite "itens registrados no sistema". Pouco personalidade mas é universal. Tabela: <code>records</code> ou <code>entries</code>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px">
+  <h3>Nota sobre anexos</h3>
+  <p>Fluxo primário: tocar em <strong>"Anexar comprovante (foto)"</strong> abre o seletor nativo com opções de <em>câmera</em> e <em>galeria</em>. PDFs continuam suportados via menu "mais opções" (⋮), mas o caminho rápido é imagem. Múltiplos anexos por cobrança, thumbnails na grade.</p>
+</div>
