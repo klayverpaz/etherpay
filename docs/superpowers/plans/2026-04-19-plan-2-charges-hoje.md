@@ -418,12 +418,13 @@ describe("classifyToday", () => {
   it("splits pending charges into today and overdue buckets", () => {
     const charges = [
       c({ id: "1", due_date: "2026-04-19", status: "pending" }),
-      c({ id: "2", due_date: "2026-04-18", status: "pending" }),
-      c({ id: "3", due_date: "2026-04-01", status: "pending" }),
+      c({ id: "2", due_date: "2026-04-01", status: "pending" }),
+      c({ id: "3", due_date: "2026-04-18", status: "pending" }),
       c({ id: "4", due_date: "2026-04-20", status: "pending" }), // upcoming — excluded
     ];
     const result = classifyToday(charges, today);
     expect(result.today.map((x) => x.id)).toEqual(["1"]);
+    // overdue is sorted oldest-first: id=2 (2026-04-01) before id=3 (2026-04-18).
     expect(result.overdue.map((x) => x.id)).toEqual(["2", "3"]);
   });
 
