@@ -38,7 +38,7 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
   if (user && isAuthRoute) {
-    return NextResponse.redirect(new URL("/clientes", request.url));
+    return NextResponse.redirect(new URL("/hoje", request.url));
   }
 
   return response;

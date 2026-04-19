@@ -13,5 +13,5 @@ export async function signInWithPassword(formData: FormData) {
   if (error) {
     return { error: error.message };
   }
-  redirect("/clientes");
+  redirect("/hoje");
 }
