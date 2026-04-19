@@ -6,7 +6,11 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: "happy-dom",
-    include: ["tests/unit/**/*.test.{ts,tsx}", "lib/**/*.test.{ts,tsx}", "features/**/*.test.{ts,tsx}"],
+    include: [
+      "tests/unit/**/*.test.{ts,tsx}",
+      "lib/**/*.test.{ts,tsx}",
+      "features/**/*.test.{ts,tsx}",
+    ],
     globals: false,
   },
   resolve: {

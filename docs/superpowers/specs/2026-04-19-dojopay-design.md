@@ -1,14 +1,14 @@
 # DojoPay — Design Specification (v1)
 
-| | |
-|---|---|
-| **App name** | DojoPay |
-| **Repository** | https://github.com/klayverpaz/dojopay.git |
-| **Spec date** | 2026-04-19 |
-| **Status** | Design approved — ready for implementation plan |
-| **Target locale (v1)** | `pt-BR` only (i18n scaffolding in place for later languages) |
-| **Delivery form (v1)** | **Responsive web app (PWA), deployed on Cloudflare Pages.** Accessed via URL in any modern browser — mobile or desktop. Users can add the app to their home screen for an app-like launcher experience. |
-| **Hosting posture** | All v1 infrastructure runs on free tiers with explicit commercial-use allowance (Cloudflare Pages, Supabase, Resend, GitHub Actions). No paid service required for v1, including when a paid subscription tier is later activated. |
+|                        |                                                                                                                                                                                                                                    |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **App name**           | DojoPay                                                                                                                                                                                                                            |
+| **Repository**         | https://github.com/klayverpaz/dojopay.git                                                                                                                                                                                          |
+| **Spec date**          | 2026-04-19                                                                                                                                                                                                                         |
+| **Status**             | Design approved — ready for implementation plan                                                                                                                                                                                    |
+| **Target locale (v1)** | `pt-BR` only (i18n scaffolding in place for later languages)                                                                                                                                                                       |
+| **Delivery form (v1)** | **Responsive web app (PWA), deployed on Cloudflare Pages.** Accessed via URL in any modern browser — mobile or desktop. Users can add the app to their home screen for an app-like launcher experience.                            |
+| **Hosting posture**    | All v1 infrastructure runs on free tiers with explicit commercial-use allowance (Cloudflare Pages, Supabase, Resend, GitHub Actions). No paid service required for v1, including when a paid subscription tier is later activated. |
 
 This document is the source of truth for DojoPay v1. Implementation plans and code reference this file. When a decision changes, update this spec first.
 
@@ -22,7 +22,7 @@ DojoPay replaces that workflow with a small web app that:
 
 - Registers each client (a student, tenant, or any recipient of recurring charges) with a default amount, phone number, and billing cycle rule.
 - Automatically materializes upcoming charges on a rolling window per client.
-- Shows what is due *today* and what is *overdue* at a glance when the app opens.
+- Shows what is due _today_ and what is _overdue_ at a glance when the app opens.
 - Generates a PT-BR WhatsApp message from a user-editable template and copies it / opens WhatsApp at the client's chat via `https://wa.me/...`.
 - Lets the user mark a charge as paid, attach receipt images, and record the actual amount received (which may differ from the charge amount).
 - Reports monthly totals so the user can see income at a glance.
@@ -101,15 +101,15 @@ Next.js 14 App Router. Server components for data fetching, client components fo
 
 Layers (top to bottom):
 
-| Layer | Location | Responsibility |
-|---|---|---|
-| UI | `app/` (pages/layouts), `components/` | Pages, layouts, UI primitives. Server components fetch; client components interact. |
-| Features | `features/<domain>/` | Domain logic and server actions that UI calls. Groups: `clients`, `charges`, `reports`, `notifications`, `billing`, `auth`. |
-| Data access | `lib/supabase/` | Server + browser Supabase client factories; typed query helpers. |
-| Domain services | `features/<domain>/services/` | Pure functions (cycle generation, template filling, monthly aggregation). No Supabase. |
-| Database | Supabase Postgres | Tables + RLS + scheduled jobs (pg_cron) + Edge Functions. |
-| Storage | Supabase Storage | Per-user bucket for attachment files. |
-| Email | Supabase Edge Function (cron) → Resend | Daily reminder email. |
+| Layer           | Location                               | Responsibility                                                                                                              |
+| --------------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| UI              | `app/` (pages/layouts), `components/`  | Pages, layouts, UI primitives. Server components fetch; client components interact.                                         |
+| Features        | `features/<domain>/`                   | Domain logic and server actions that UI calls. Groups: `clients`, `charges`, `reports`, `notifications`, `billing`, `auth`. |
+| Data access     | `lib/supabase/`                        | Server + browser Supabase client factories; typed query helpers.                                                            |
+| Domain services | `features/<domain>/services/`          | Pure functions (cycle generation, template filling, monthly aggregation). No Supabase.                                      |
+| Database        | Supabase Postgres                      | Tables + RLS + scheduled jobs (pg_cron) + Edge Functions.                                                                   |
+| Storage         | Supabase Storage                       | Per-user bucket for attachment files.                                                                                       |
+| Email           | Supabase Edge Function (cron) → Resend | Daily reminder email.                                                                                                       |
 
 **Read flow (server component):** request arrives → server component calls `features/charges/services/getTodayCharges(userId)` → Supabase query via `createServerClient` → returns data → renders.
 
@@ -123,71 +123,71 @@ All tables are Postgres. All row PKs are UUIDs generated client-side. Timestamps
 
 ### 6.1 `clients`
 
-| Column | Type | Notes |
-|---|---|---|
-| `id` | UUID PK | Client-generated |
-| `owner_id` | UUID NOT NULL | FK `auth.users.id`; RLS enforced |
-| `name` | TEXT NOT NULL | |
-| `phone_e164` | TEXT | For `wa.me` link, e.g. `+5511987654321` |
-| `default_amount_cents` | BIGINT NOT NULL | Pre-fills new charges |
-| `cycle_kind` | TEXT NOT NULL CHECK(`cycle_kind IN ('days','weeks','months')`) | |
-| `cycle_every` | INTEGER NOT NULL CHECK(`cycle_every >= 1`) | |
-| `cycle_anchor_date` | DATE NOT NULL | Reference day |
-| `cycle_end_date` | DATE NULL | Optional cutoff |
-| `notes` | TEXT | Free-form |
-| `archived_at` | TIMESTAMPTZ NULL | Soft archive (keeps historical charges) |
-| `created_at` | TIMESTAMPTZ NOT NULL DEFAULT now() | |
-| `updated_at` | TIMESTAMPTZ NOT NULL DEFAULT now() | Trigger-maintained |
-| `deleted_at` | TIMESTAMPTZ NULL | Soft delete |
+| Column                 | Type                                                           | Notes                                   |
+| ---------------------- | -------------------------------------------------------------- | --------------------------------------- |
+| `id`                   | UUID PK                                                        | Client-generated                        |
+| `owner_id`             | UUID NOT NULL                                                  | FK `auth.users.id`; RLS enforced        |
+| `name`                 | TEXT NOT NULL                                                  |                                         |
+| `phone_e164`           | TEXT                                                           | For `wa.me` link, e.g. `+5511987654321` |
+| `default_amount_cents` | BIGINT NOT NULL                                                | Pre-fills new charges                   |
+| `cycle_kind`           | TEXT NOT NULL CHECK(`cycle_kind IN ('days','weeks','months')`) |                                         |
+| `cycle_every`          | INTEGER NOT NULL CHECK(`cycle_every >= 1`)                     |                                         |
+| `cycle_anchor_date`    | DATE NOT NULL                                                  | Reference day                           |
+| `cycle_end_date`       | DATE NULL                                                      | Optional cutoff                         |
+| `notes`                | TEXT                                                           | Free-form                               |
+| `archived_at`          | TIMESTAMPTZ NULL                                               | Soft archive (keeps historical charges) |
+| `created_at`           | TIMESTAMPTZ NOT NULL DEFAULT now()                             |                                         |
+| `updated_at`           | TIMESTAMPTZ NOT NULL DEFAULT now()                             | Trigger-maintained                      |
+| `deleted_at`           | TIMESTAMPTZ NULL                                               | Soft delete                             |
 
 ### 6.2 `charges`
 
-| Column | Type | Notes |
-|---|---|---|
-| `id` | UUID PK | |
-| `owner_id` | UUID NOT NULL | |
-| `client_id` | UUID NOT NULL | FK `clients.id` |
-| `due_date` | DATE NOT NULL | |
-| `amount_cents` | BIGINT NOT NULL | Pre-filled from `clients.default_amount_cents`, editable per charge |
-| `status` | TEXT NOT NULL CHECK(`status IN ('pending','paid','canceled')`) | **`overdue` is NOT stored** — derived on read (`status='pending'` AND `due_date < current_date`) |
-| `paid_at` | TIMESTAMPTZ NULL | |
-| `paid_amount_cents` | BIGINT NULL | Actual amount received (may differ from `amount_cents`) |
-| `payment_method` | TEXT NULL CHECK(`payment_method IN ('pix','cash','transfer','other')`) | |
-| `notes` | TEXT | Free-form |
-| `created_at`, `updated_at`, `deleted_at` | TIMESTAMPTZ | |
+| Column                                   | Type                                                                   | Notes                                                                                            |
+| ---------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `id`                                     | UUID PK                                                                |                                                                                                  |
+| `owner_id`                               | UUID NOT NULL                                                          |                                                                                                  |
+| `client_id`                              | UUID NOT NULL                                                          | FK `clients.id`                                                                                  |
+| `due_date`                               | DATE NOT NULL                                                          |                                                                                                  |
+| `amount_cents`                           | BIGINT NOT NULL                                                        | Pre-filled from `clients.default_amount_cents`, editable per charge                              |
+| `status`                                 | TEXT NOT NULL CHECK(`status IN ('pending','paid','canceled')`)         | **`overdue` is NOT stored** — derived on read (`status='pending'` AND `due_date < current_date`) |
+| `paid_at`                                | TIMESTAMPTZ NULL                                                       |                                                                                                  |
+| `paid_amount_cents`                      | BIGINT NULL                                                            | Actual amount received (may differ from `amount_cents`)                                          |
+| `payment_method`                         | TEXT NULL CHECK(`payment_method IN ('pix','cash','transfer','other')`) |                                                                                                  |
+| `notes`                                  | TEXT                                                                   | Free-form                                                                                        |
+| `created_at`, `updated_at`, `deleted_at` | TIMESTAMPTZ                                                            |                                                                                                  |
 
 Indexes: `(owner_id, due_date)`, `(owner_id, client_id)`, `(owner_id, status, due_date)`.
 
 ### 6.3 `attachments`
 
-| Column | Type | Notes |
-|---|---|---|
-| `id` | UUID PK | |
-| `owner_id` | UUID NOT NULL | |
-| `charge_id` | UUID NOT NULL | FK `charges.id` |
-| `storage_path` | TEXT NOT NULL | Path inside Supabase Storage bucket |
-| `mime_type` | TEXT NOT NULL | `image/jpeg`, `image/png`, `image/webp`, `application/pdf` |
-| `size_bytes` | BIGINT | After client-side compression for images |
-| `original_name` | TEXT | |
-| `created_at`, `deleted_at` | TIMESTAMPTZ | |
+| Column                     | Type          | Notes                                                      |
+| -------------------------- | ------------- | ---------------------------------------------------------- |
+| `id`                       | UUID PK       |                                                            |
+| `owner_id`                 | UUID NOT NULL |                                                            |
+| `charge_id`                | UUID NOT NULL | FK `charges.id`                                            |
+| `storage_path`             | TEXT NOT NULL | Path inside Supabase Storage bucket                        |
+| `mime_type`                | TEXT NOT NULL | `image/jpeg`, `image/png`, `image/webp`, `application/pdf` |
+| `size_bytes`               | BIGINT        | After client-side compression for images                   |
+| `original_name`            | TEXT          |                                                            |
+| `created_at`, `deleted_at` | TIMESTAMPTZ   |                                                            |
 
 Supabase Storage bucket `attachments` uses a path convention `<owner_id>/<charge_id>/<uuid>.<ext>` with a storage RLS policy restricting reads/writes to `owner_id = auth.uid()`. Client-side compression target for images: max ~2000 px longest edge, ~85% JPEG quality. PDFs uploaded as-is. Max file size (post-compression) 10 MB.
 
 ### 6.4 `settings` (one row per user)
 
-| Column | Type | Notes |
-|---|---|---|
-| `owner_id` | UUID PK | One row per user; creates on first sign-in via trigger |
-| `message_template` | TEXT NOT NULL | Default PT-BR template with `{nome}`, `{valor}`, `{vencimento}` |
-| `default_cycle_kind` | TEXT NOT NULL | Default for new clients (`'months'`) |
-| `default_cycle_every` | INTEGER NOT NULL | Default 1 |
-| `currency` | TEXT NOT NULL | Default `'BRL'` |
-| `locale` | TEXT NOT NULL | Default `'pt-BR'` |
-| `email_reminders_enabled` | BOOLEAN NOT NULL | Default `true` |
-| `daily_reminder_time` | TIME NOT NULL | Default `'09:00'` |
-| `daily_reminder_timezone` | TEXT NOT NULL | IANA TZ, default `'America/Sao_Paulo'` |
-| `notify_only_if_any` | BOOLEAN NOT NULL | Default `true` (skip "0 hoje, 0 atraso" emails) |
-| `updated_at` | TIMESTAMPTZ | |
+| Column                    | Type             | Notes                                                           |
+| ------------------------- | ---------------- | --------------------------------------------------------------- |
+| `owner_id`                | UUID PK          | One row per user; creates on first sign-in via trigger          |
+| `message_template`        | TEXT NOT NULL    | Default PT-BR template with `{nome}`, `{valor}`, `{vencimento}` |
+| `default_cycle_kind`      | TEXT NOT NULL    | Default for new clients (`'months'`)                            |
+| `default_cycle_every`     | INTEGER NOT NULL | Default 1                                                       |
+| `currency`                | TEXT NOT NULL    | Default `'BRL'`                                                 |
+| `locale`                  | TEXT NOT NULL    | Default `'pt-BR'`                                               |
+| `email_reminders_enabled` | BOOLEAN NOT NULL | Default `true`                                                  |
+| `daily_reminder_time`     | TIME NOT NULL    | Default `'09:00'`                                               |
+| `daily_reminder_timezone` | TEXT NOT NULL    | IANA TZ, default `'America/Sao_Paulo'`                          |
+| `notify_only_if_any`      | BOOLEAN NOT NULL | Default `true` (skip "0 hoje, 0 atraso" emails)                 |
+| `updated_at`              | TIMESTAMPTZ      |                                                                 |
 
 Default message template (PT-BR):
 
@@ -418,6 +418,7 @@ dojopay/
 ```
 
 **Module boundary rules:**
+
 - `app/` only composes UI and calls server actions; no direct Supabase queries except through feature queries.
 - `features/<domain>/services/` is pure — no imports from `lib/supabase/`.
 - `lib/` has no feature-specific logic.
@@ -426,29 +427,29 @@ dojopay/
 
 ### 10.1 Code-level
 
-| Area | Choice | Reason |
-|---|---|---|
-| Framework | Next.js 14 App Router | SSR + server actions + strong ecosystem |
-| Language | TypeScript (strict) | Leverages user's existing TS experience |
-| Styling | Tailwind CSS + shadcn/ui | Responsive-first utilities; accessible primitives; customizable |
-| Auth client | `@supabase/ssr` | Cookie-based sessions in App Router |
-| Forms | `react-hook-form` + `zod` | Consistent validation on client + server |
-| State (client) | React Query (`@tanstack/react-query`) | Client-side cache for queries; pairs with server actions |
-| Dates | `date-fns` + `date-fns-tz` | Cycle math, timezone-aware |
-| i18n | `next-intl` | App Router-native, server + client |
-| Image compression | `browser-image-compression` | Client-side JPEG/PNG resize before upload |
-| PWA | `next-pwa` (or manual manifest + SW) | Add-to-home-screen + static asset cache |
-| Tests | Vitest + Playwright | Unit + browser-level E2E |
-| Lint/format | ESLint + Prettier + `tsc --noEmit` | Standard |
+| Area              | Choice                                | Reason                                                          |
+| ----------------- | ------------------------------------- | --------------------------------------------------------------- |
+| Framework         | Next.js 14 App Router                 | SSR + server actions + strong ecosystem                         |
+| Language          | TypeScript (strict)                   | Leverages user's existing TS experience                         |
+| Styling           | Tailwind CSS + shadcn/ui              | Responsive-first utilities; accessible primitives; customizable |
+| Auth client       | `@supabase/ssr`                       | Cookie-based sessions in App Router                             |
+| Forms             | `react-hook-form` + `zod`             | Consistent validation on client + server                        |
+| State (client)    | React Query (`@tanstack/react-query`) | Client-side cache for queries; pairs with server actions        |
+| Dates             | `date-fns` + `date-fns-tz`            | Cycle math, timezone-aware                                      |
+| i18n              | `next-intl`                           | App Router-native, server + client                              |
+| Image compression | `browser-image-compression`           | Client-side JPEG/PNG resize before upload                       |
+| PWA               | `next-pwa` (or manual manifest + SW)  | Add-to-home-screen + static asset cache                         |
+| Tests             | Vitest + Playwright                   | Unit + browser-level E2E                                        |
+| Lint/format       | ESLint + Prettier + `tsc --noEmit`    | Standard                                                        |
 
 ### 10.2 Hosted services (all free tier with commercial-use allowed)
 
-| Service | Role | Free-tier relevance |
-|---|---|---|
-| **Cloudflare Pages** | Hosts the Next.js app (via `@cloudflare/next-on-pages`) | Free forever; unlimited bandwidth; commercial use permitted; preview URL per PR |
-| **Supabase** | Postgres database, Auth, Storage, Edge Functions, `pg_cron` | Free tier permits commercial use. Caveat: project auto-pauses after ~7 days without traffic; the daily reminder cron keeps it awake. |
-| **Resend** | Transactional email (daily reminder) | 100 emails/day, 3000/month; commercial use permitted |
-| **GitHub Actions** | CI: lint, typecheck, unit tests | 2000 free minutes/month on public repos |
+| Service              | Role                                                        | Free-tier relevance                                                                                                                  |
+| -------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **Cloudflare Pages** | Hosts the Next.js app (via `@cloudflare/next-on-pages`)     | Free forever; unlimited bandwidth; commercial use permitted; preview URL per PR                                                      |
+| **Supabase**         | Postgres database, Auth, Storage, Edge Functions, `pg_cron` | Free tier permits commercial use. Caveat: project auto-pauses after ~7 days without traffic; the daily reminder cron keeps it awake. |
+| **Resend**           | Transactional email (daily reminder)                        | 100 emails/day, 3000/month; commercial use permitted                                                                                 |
+| **GitHub Actions**   | CI: lint, typecheck, unit tests                             | 2000 free minutes/month on public repos                                                                                              |
 
 ### 10.3 Runtime-environment note
 
@@ -495,10 +496,11 @@ A PT-BR step-by-step guide for the developer, assuming no prior experience with 
 9. Custom domain (optional): add a domain to the Cloudflare Pages project (DNS automatically configured if the domain is already on Cloudflare; otherwise follow the CNAME instructions).
 10. Troubleshooting: cookies blocked in incognito, OAuth redirect mismatch (Cloudflare preview URLs need to be whitelisted in Supabase Auth settings), Storage CORS, RLS recursion; where to read logs (Cloudflare Pages deployment logs, Cloudflare Workers request logs, Supabase Functions logs, Supabase SQL logs).
 11. Pre-launch checklist:
-   - Icons + theme colors in `manifest.json`
-   - PWA installability verified via Chrome DevTools Lighthouse audit
-   - Privacy policy + Terms URLs (hosted as simple pages in the same app)
-   - Email reminder tested end-to-end (subscribe, wait for next cron slot, receive)
+
+- Icons + theme colors in `manifest.json`
+- PWA installability verified via Chrome DevTools Lighthouse audit
+- Privacy policy + Terms URLs (hosted as simple pages in the same app)
+- Email reminder tested end-to-end (subscribe, wait for next cron slot, receive)
 
 This document is versioned with the code and updated whenever the infra process changes.
 
@@ -528,7 +530,7 @@ Pragmatic, high-ROI coverage.
 
 ## 14. Deferred work (v2+)
 
-Each item has scaffolding or a clean extension point in v1 but is **not implemented** until a later version. Structure: *what*, *where v1 leaves a hook*, *what it takes to implement*, *dependencies*.
+Each item has scaffolding or a clean extension point in v1 but is **not implemented** until a later version. Structure: _what_, _where v1 leaves a hook_, _what it takes to implement_, _dependencies_.
 
 ### 14.1 Web Push notifications
 
@@ -602,23 +604,23 @@ Each item has scaffolding or a clean extension point in v1 but is **not implemen
 
 ## Appendix A — Decisions log
 
-| # | Decision | Rationale |
-|---|---|---|
-| A1 | Generic `clients` entity instead of `students` | App is reusable beyond BJJ trainer; naming should reflect pattern, not example |
-| A2 | Rolling window of 3 upcoming charges (not lazy generation) | Operator needs forward visibility into upcoming dues |
-| A3 | `overdue` computed on read, not persisted | Avoids periodic update job; always accurate |
-| A4 | Money as integer cents | Standard; avoids float precision bugs |
-| A5 | Client-generated UUIDs | Stable IDs before the server round-trip; enables optimistic writes |
-| A6 | Supabase for auth + DB + storage | Single platform; generous free tier; RLS simplifies multi-user |
-| A7 | `pt-BR` only in v1 with full i18n scaffolding | Focuses on initial market, no refactor when English is added |
-| A8 | Daily email reminder instead of local/push notifications | Works on 100% of devices (incl. iOS) without PWA install; zero platform dependency |
-| A9 | Amount per charge editable, pre-filled from client default | Trainer flexibility; "not all billings have the exact same value" |
-| A10 | Attachments: image-primary, PDFs allowed; neutral UI wording | Most receipts are WhatsApp screenshots; PDFs still supported via same picker |
-| A11 | Delivery as a responsive web app (PWA) | One URL reaches any modern browser (mobile or desktop); simpler architecture; user's TS skills transfer directly |
-| A12 | Next.js App Router + Supabase + Cloudflare Pages stack | Modern Next.js features (server actions, server components) + a hosting path whose free tier explicitly allows commercial use |
-| A13 | Row Level Security as the authorization mechanism | Enforced in Postgres; no way for the client to read another user's data even if client code is compromised |
-| A14 | Soft delete everywhere (`deleted_at`), no `DELETE FROM` | Data recovery, cleaner history, simpler reasoning |
-| A15 | Free tiers whose licenses allow commercial use | Cost structure survives v2 subscription activation without migration; avoids Vercel Hobby's non-commercial clause |
+| #   | Decision                                                     | Rationale                                                                                                                     |
+| --- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| A1  | Generic `clients` entity instead of `students`               | App is reusable beyond BJJ trainer; naming should reflect pattern, not example                                                |
+| A2  | Rolling window of 3 upcoming charges (not lazy generation)   | Operator needs forward visibility into upcoming dues                                                                          |
+| A3  | `overdue` computed on read, not persisted                    | Avoids periodic update job; always accurate                                                                                   |
+| A4  | Money as integer cents                                       | Standard; avoids float precision bugs                                                                                         |
+| A5  | Client-generated UUIDs                                       | Stable IDs before the server round-trip; enables optimistic writes                                                            |
+| A6  | Supabase for auth + DB + storage                             | Single platform; generous free tier; RLS simplifies multi-user                                                                |
+| A7  | `pt-BR` only in v1 with full i18n scaffolding                | Focuses on initial market, no refactor when English is added                                                                  |
+| A8  | Daily email reminder instead of local/push notifications     | Works on 100% of devices (incl. iOS) without PWA install; zero platform dependency                                            |
+| A9  | Amount per charge editable, pre-filled from client default   | Trainer flexibility; "not all billings have the exact same value"                                                             |
+| A10 | Attachments: image-primary, PDFs allowed; neutral UI wording | Most receipts are WhatsApp screenshots; PDFs still supported via same picker                                                  |
+| A11 | Delivery as a responsive web app (PWA)                       | One URL reaches any modern browser (mobile or desktop); simpler architecture; user's TS skills transfer directly              |
+| A12 | Next.js App Router + Supabase + Cloudflare Pages stack       | Modern Next.js features (server actions, server components) + a hosting path whose free tier explicitly allows commercial use |
+| A13 | Row Level Security as the authorization mechanism            | Enforced in Postgres; no way for the client to read another user's data even if client code is compromised                    |
+| A14 | Soft delete everywhere (`deleted_at`), no `DELETE FROM`      | Data recovery, cleaner history, simpler reasoning                                                                             |
+| A15 | Free tiers whose licenses allow commercial use               | Cost structure survives v2 subscription activation without migration; avoids Vercel Hobby's non-commercial clause             |
 
 ## Appendix B — Glossary
 
