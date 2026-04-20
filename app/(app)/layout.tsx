@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { TopBar } from "@/components/TopBar";
 import { BottomNav, SideNav } from "@/components/Nav";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -10,13 +9,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   } = await supabase.auth.getUser();
   if (!user) redirect("/sign-in");
 
+  const email = user.email ?? "";
+  const name = email.split("@")[0] ?? "Professor";
+
   return (
-    <div className="flex min-h-screen flex-col">
-      <TopBar email={user.email ?? ""} />
-      <div className="flex flex-1">
-        <SideNav />
-        <main className="flex-1 px-4 py-6 pb-24 lg:pb-6">{children}</main>
-      </div>
+    <div className="flex min-h-screen">
+      <SideNav userLabel={{ name, plan: "Plano grátis" }} />
+      <main className="flex-1 px-4 py-6 pb-28 lg:px-8 lg:py-8 lg:pb-8">{children}</main>
       <BottomNav />
     </div>
   );
