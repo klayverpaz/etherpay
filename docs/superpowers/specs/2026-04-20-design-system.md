@@ -1,8 +1,8 @@
-# DojoPay — Design System (v1)
+# EtherPay — Design System (v1)
 
 **Status:** aprovado, pronto pra virar plano de implementação
 **Data:** 2026-04-20
-**Contexto:** v1 do DojoPay está em produção com tema shadcn default (slate/light) e Arial. Este documento define o sistema visual próprio do produto, alinhado à estética que o usuário escolheu (inspirado em app de habit tracker dark + acento verde, porém adaptado para light theme).
+**Contexto:** v1 do EtherPay está em produção com tema shadcn default (slate/light) e Arial. Este documento define o sistema visual próprio do produto, alinhado à estética que o usuário escolheu (inspirado em app de habit tracker dark + acento verde, porém adaptado para light theme).
 
 ---
 
@@ -222,7 +222,7 @@ Itens: Hoje · Clientes · Relatórios · Ajustes (mesmos do SideNav).
 220px fixo à esquerda. Fundo `surface`, borda direita `border`.
 
 Estrutura:
-1. **Brand** — quadrado 32×32 com "DP" em fundo `accent` + nome "DojoPay"
+1. **Brand** — quadrado 32×32 com "DP" em fundo `accent` + nome "EtherPay"
 2. **Itens** — `flex gap-10`, padding 9px 12px, `radius-input`. Ativo = `accent-soft`/`accent-text`/600.
 3. **Rodapé** — avatar 32px + nome do usuário + sub "Plano grátis"
 
@@ -353,6 +353,6 @@ Hero central: valor grande + badge de status. Abaixo, detail rows (vencimento ·
 ## 8. Referências
 
 - App inspirador: screenshots do habit tracker dark com acento verde mint (mantidos em `.superpowers/brainstorm/17650-1776690651/content/` — referência visual, não copiar diretamente)
-- Spec original do produto: `docs/superpowers/specs/2026-04-19-dojopay-design.md`
+- Spec original do produto: `docs/superpowers/specs/2026-04-19-etherpay-design.md`
 - Setup atual: `docs/setup-guide.md`
-- Estado da stack: `memory/dojopay_stack_state.md`
+- Estado da stack: `memory/etherpay_stack_state.md`

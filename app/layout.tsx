@@ -10,12 +10,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "DojoPay",
+  title: "EtherPay",
   description: "Gerencie cobranças recorrentes de forma simples.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    title: "DojoPay",
+    title: "EtherPay",
     statusBarStyle: "default",
   },
   icons: {

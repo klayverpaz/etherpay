@@ -1,4 +1,4 @@
-# DojoPay Plan 3 — WhatsApp, Attachments, Reports, Settings, Nav Redesign
+# EtherPay Plan 3 — WhatsApp, Attachments, Reports, Settings, Nav Redesign
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack (already pinned by Plans 1–2):** Next.js 14 App Router, TypeScript strict, pnpm, Tailwind v3 + shadcn/ui v2.1.8 (Radix), Supabase (Postgres + Auth + Storage), `@supabase/ssr`, `react-hook-form` + zod v4 (`standardSchemaResolver`), `date-fns`, Vitest, Playwright. New dependency added by this plan: `browser-image-compression`.
 
-**Reference spec:** `docs/superpowers/specs/2026-04-19-dojopay-design.md` — §4 feature set (WhatsApp, attachments, reports, settings), §6.4 `settings` table, §7.1 all four pages, §7.2 charge detail (attachments grid), §7.3 Notificar pelo Whatsapp + Anexar comprovante, §8.3 domain services (`template.ts`, `aggregate.ts`), §8.7 i18n scaffolding, §8.8 attachments flow.
+**Reference spec:** `docs/superpowers/specs/2026-04-19-etherpay-design.md` — §4 feature set (WhatsApp, attachments, reports, settings), §6.4 `settings` table, §7.1 all four pages, §7.2 charge detail (attachments grid), §7.3 Notificar pelo Whatsapp + Anexar comprovante, §8.3 domain services (`template.ts`, `aggregate.ts`), §8.7 i18n scaffolding, §8.8 attachments flow.
 
 **Build on Plans 1 + 2:**
 
@@ -2318,7 +2318,7 @@ import { Button } from "@/components/ui/button";
 export function TopBar({ email }: { email: string }) {
   return (
     <header className="flex items-center justify-between border-b px-4 py-3">
-      <span className="font-semibold">DojoPay</span>
+      <span className="font-semibold">EtherPay</span>
       <div className="hidden items-center gap-3 lg:flex">
         <span className="text-sm text-muted-foreground">{email}</span>
         <form action={signOut}>

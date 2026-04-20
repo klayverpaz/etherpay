@@ -11,7 +11,7 @@ const LOGO_SVG = (size) =>
 <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 100 100">
   <rect width="100" height="100" fill="rgb(15,23,42)" />
   <text x="50" y="62" text-anchor="middle" font-family="system-ui, sans-serif"
-        font-size="44" font-weight="700" fill="${FG}">DP</text>
+        font-size="44" font-weight="700" fill="${FG}">EP</text>
 </svg>
 `.trim();
 

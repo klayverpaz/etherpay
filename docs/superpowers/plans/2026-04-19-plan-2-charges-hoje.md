@@ -1,4 +1,4 @@
-# DojoPay Plan 2 — Charges, Cycle Engine, and the Hoje Dashboard
+# EtherPay Plan 2 — Charges, Cycle Engine, and the Hoje Dashboard
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -8,7 +8,7 @@
 
 **Tech Stack (already pinned by Plan 1):** Next.js 14 (App Router), TypeScript strict, pnpm, Tailwind CSS + shadcn/ui v2.1.8 (Radix), Supabase (Postgres + Auth), `@supabase/ssr`, `react-hook-form` + `zod` v4 (use `standardSchemaResolver`, not `zodResolver`), `date-fns`, Vitest, Playwright.
 
-**Reference spec:** `docs/superpowers/specs/2026-04-19-dojopay-design.md` — §4 feature set, §6.2 `charges` table, §6.5 rolling window, §7.1 Hoje page, §7.2 cobrança detail, §7.3 key interactions, §8.3 domain services.
+**Reference spec:** `docs/superpowers/specs/2026-04-19-etherpay-design.md` — §4 feature set, §6.2 `charges` table, §6.5 rolling window, §7.1 Hoje page, §7.2 cobrança detail, §7.3 key interactions, §8.3 domain services.
 
 **Build on Plan 1:** `docs/superpowers/plans/2026-04-19-plan-1-foundation.md` — schema and RLS for `charges` already applied; `handle_new_user` seeds a default `settings` row; generated types live at `lib/supabase/types.ts`; `lib/uuid.ts`, `lib/money.ts`, `lib/date.ts` are already in place. Do NOT reintroduce packages that were installed in Plan 1.
 
@@ -1362,7 +1362,7 @@ export function TopBar({ email }: { email: string }) {
   return (
     <header className="flex items-center justify-between border-b px-4 py-3">
       <div className="flex items-center gap-6">
-        <span className="font-semibold">DojoPay</span>
+        <span className="font-semibold">EtherPay</span>
         <nav className="flex items-center gap-4 text-sm">
           <Link href="/hoje" className="text-foreground hover:underline">
             Hoje

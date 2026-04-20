@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-const DISMISS_KEY = "dojopay.pwa-hint-dismissed";
+const DISMISS_KEY = "etherpay.pwa-hint-dismissed";
 
 type InstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -87,7 +87,7 @@ export function PWAInstallHint() {
           </p>
         ) : (
           <p className="text-xs text-muted-foreground">
-            Instale o DojoPay na tela inicial para abrir com um toque.
+            Instale o EtherPay na tela inicial para abrir com um toque.
           </p>
         )}
       </div>

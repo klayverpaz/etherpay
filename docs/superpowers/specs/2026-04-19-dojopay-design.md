@@ -1,16 +1,16 @@
-# DojoPay — Design Specification (v1)
+# EtherPay — Design Specification (v1)
 
 |                        |                                                                                                                                                                                                                                    |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **App name**           | DojoPay                                                                                                                                                                                                                            |
-| **Repository**         | https://github.com/klayverpaz/dojopay.git                                                                                                                                                                                          |
+| **App name**           | EtherPay                                                                                                                                                                                                                            |
+| **Repository**         | https://github.com/klayverpaz/etherpay.git                                                                                                                                                                                          |
 | **Spec date**          | 2026-04-19                                                                                                                                                                                                                         |
 | **Status**             | Design approved — ready for implementation plan                                                                                                                                                                                    |
 | **Target locale (v1)** | `pt-BR` only (i18n scaffolding in place for later languages)                                                                                                                                                                       |
 | **Delivery form (v1)** | **Responsive web app (PWA), deployed on Cloudflare Pages.** Accessed via URL in any modern browser — mobile or desktop. Users can add the app to their home screen for an app-like launcher experience.                            |
 | **Hosting posture**    | All v1 infrastructure runs on free tiers with explicit commercial-use allowance (Cloudflare Pages, Supabase, Resend, GitHub Actions). No paid service required for v1, including when a paid subscription tier is later activated. |
 
-This document is the source of truth for DojoPay v1. Implementation plans and code reference this file. When a decision changes, update this spec first.
+This document is the source of truth for EtherPay v1. Implementation plans and code reference this file. When a decision changes, update this spec first.
 
 ---
 
@@ -18,7 +18,7 @@ This document is the source of truth for DojoPay v1. Implementation plans and co
 
 The idea originated from a Brazilian jiu-jitsu trainer who manages his students' monthly payments in a spreadsheet. He is not technically sophisticated, and the spreadsheet workflow costs him time every month (checking who owes, drafting each WhatsApp message by hand, tracking who has paid, remembering dates).
 
-DojoPay replaces that workflow with a small web app that:
+EtherPay replaces that workflow with a small web app that:
 
 - Registers each client (a student, tenant, or any recipient of recurring charges) with a default amount, phone number, and billing cycle rule.
 - Automatically materializes upcoming charges on a rolling window per client.
@@ -65,7 +65,7 @@ Although the initial user is a BJJ trainer, the data model and UI are **generic*
 
 **Golden-path flow (daily use):**
 
-1. Receives the daily summary email at 09:00: "Você tem 2 cobranças hoje e 3 em atraso. Abrir DojoPay →".
+1. Receives the daily summary email at 09:00: "Você tem 2 cobranças hoje e 3 em atraso. Abrir EtherPay →".
 2. Clicks the link; app opens in browser, signed in if the session is still valid.
 3. **Hoje** page shows today's and overdue charges with totals.
 4. Taps a charge → reviews amount, taps **Notificar pelo Whatsapp** → message is copied to clipboard and WhatsApp opens to the client's chat via `https://wa.me/`.
@@ -321,7 +321,7 @@ Thin wrappers that validate the session, call services, and call Supabase. One f
 ## 9. Project structure
 
 ```
-dojopay/
+etherpay/
 ├── app/                              Next.js App Router
 │   ├── (auth)/
 │   │   ├── sign-in/page.tsx
@@ -406,7 +406,7 @@ dojopay/
 ├── docs/
 │   ├── setup-guide.md                PT-BR (see §11)
 │   └── superpowers/specs/
-│       └── 2026-04-19-dojopay-design.md  (this file)
+│       └── 2026-04-19-etherpay-design.md  (this file)
 │
 ├── .env.example
 ├── .gitignore                         Includes `.superpowers/`, `.env.local`, `node_modules/`
@@ -506,7 +506,7 @@ This document is versioned with the code and updated whenever the infra process 
 
 ## 12. Distribution and deployment
 
-- **v1 target:** a single public URL on Cloudflare Pages (e.g. `dojopay.pages.dev`; custom domain when desired, e.g. `dojopay.app`).
+- **v1 target:** a single public URL on Cloudflare Pages (e.g. `etherpay.pages.dev`; custom domain when desired, e.g. `etherpay.app`).
 - **Environments:** Production (main branch) and Preview (every PR). Cloudflare Pages creates both automatically from the connected GitHub repo.
 - **CI:** GitHub Actions runs lint, typecheck, and Vitest on PRs. Cloudflare Pages runs its own build on push; we do not duplicate the build in CI.
 - **Database changes:** SQL migrations in `supabase/migrations/` reviewed via PR; applied to the Supabase project with `supabase db push` from a maintainer's machine (or a dedicated CI job using the Supabase CLI + service role token).
@@ -630,5 +630,5 @@ Each item has scaffolding or a clean extension point in v1 but is **not implemen
 - **Server action:** a Next.js function marked `"use server"` that runs on the server, called from client components. Replaces traditional REST endpoints for internal mutations.
 - **PWA (Progressive Web App):** a web app that can be added to the home screen, uses a service worker, and behaves like a native app shell.
 - **Edge Function:** a Supabase-hosted serverless function; used here for the daily reminder email cron job.
-- **Deep link:** a URL that opens the app at a specific screen, e.g. `https://dojopay.app/hoje`. On mobile web, deep links are just normal URLs.
+- **Deep link:** a URL that opens the app at a specific screen, e.g. `https://etherpay.app/hoje`. On mobile web, deep links are just normal URLs.
 - **Feature gate:** a hook/function returning whether a feature is accessible to the current user; used for free-tier limits.

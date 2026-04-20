@@ -1,6 +1,6 @@
 {
-  "name": "DojoPay",
-  "short_name": "DojoPay",
+  "name": "EtherPay",
+  "short_name": "EtherPay",
   "description": "Gerencie cobranças recorrentes de forma simples.",
   "start_url": "/hoje",
   "scope": "/",

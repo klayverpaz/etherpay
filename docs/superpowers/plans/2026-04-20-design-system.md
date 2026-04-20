@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Aplicar o Design System v1 descrito em `docs/superpowers/specs/2026-04-20-design-system.md` ao DojoPay — substituir tema shadcn default + Arial por paleta verde esmeralda + Inter, introduzir componentes (Hero, StatusBadge, FilterPills, Avatar), e refatorar as 4 telas principais (`/hoje`, `/clientes`, `/cobrancas/[id]`, `/relatorios`) para o novo visual.
+**Goal:** Aplicar o Design System v1 descrito em `docs/superpowers/specs/2026-04-20-design-system.md` ao EtherPay — substituir tema shadcn default + Arial por paleta verde esmeralda + Inter, introduzir componentes (Hero, StatusBadge, FilterPills, Avatar), e refatorar as 4 telas principais (`/hoje`, `/clientes`, `/cobrancas/[id]`, `/relatorios`) para o novo visual.
 
 **Architecture:** Mudança incremental no stack existente (Next 14 + Tailwind v3 + shadcn). Tokens no `globals.css` e `tailwind.config.ts`; primitivos novos em `components/ui/`; componentes de domínio em `components/`; nova query agregadora em `features/charges/queries.ts`. Zero mudança em rotas, schemas ou server actions.
 
@@ -15,11 +15,11 @@
 Antes de começar qualquer task, ler:
 
 - `docs/superpowers/specs/2026-04-20-design-system.md` — decisões de design, tokens, componentes, layouts
-- `memory/dojopay_stack_state.md` (via /memory ou `.claude/projects/-Users-klayver-Repositories-dojopay/memory/`) — pins de versão e convenções pós-Plan 4
+- `memory/etherpay_stack_state.md` (via /memory ou `.claude/projects/-Users-klayver-Repositories-etherpay/memory/`) — pins de versão e convenções pós-Plan 4
 
 ## Convenções do plano
 
-- Todos os paths são relativos à raiz do repo (`/Users/klayver/Repositories/dojopay/`).
+- Todos os paths são relativos à raiz do repo (`/Users/klayver/Repositories/etherpay/`).
 - Após cada task, rodar `pnpm lint && pnpm typecheck && pnpm test` — TODOS devem passar antes de commitar.
 - Mensagens de commit em PT-BR, prefixadas com `feat:`, `refactor:`, `style:`, `test:`.
 - **Não** criar dark mode, **não** adicionar day-strip, **não** mexer em server actions ou schema do banco.
@@ -86,12 +86,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "DojoPay",
+  title: "EtherPay",
   description: "Gerencie cobranças recorrentes de forma simples.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    title: "DojoPay",
+    title: "EtherPay",
     statusBarStyle: "default",
   },
   icons: {
@@ -1049,7 +1049,7 @@ export function SideNav({ userLabel }: { userLabel?: { name: string; plan: strin
         <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-primary text-sm font-bold text-primary-foreground">
           DP
         </div>
-        <span className="text-sm font-bold tracking-tight">DojoPay</span>
+        <span className="text-sm font-bold tracking-tight">EtherPay</span>
       </div>
       <div className="flex flex-col gap-0.5">
         {ITEMS.map((item) => {
@@ -1128,7 +1128,7 @@ Mudanças:
 Run: `pnpm dev`
 Expected:
 - Mobile: BottomNav flutuante com fundo verde suave na aba ativa
-- Desktop: SideNav mostra "DojoPay" + itens + rodapé com iniciais do usuário
+- Desktop: SideNav mostra "EtherPay" + itens + rodapé com iniciais do usuário
 
 - [ ] **Step 4: Rodar e2e para confirmar que seletores existentes ainda funcionam**
 

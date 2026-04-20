@@ -1,6 +1,6 @@
-# Guia de Setup do DojoPay
+# Guia de Setup do EtherPay
 
-Este guia parte do zero e leva um desenvolvedor até ter uma instância do DojoPay rodando localmente e publicada em uma URL pública na Netlify. Tudo em infraestrutura de plano gratuito com uso comercial permitido.
+Este guia parte do zero e leva um desenvolvedor até ter uma instância do EtherPay rodando localmente e publicada em uma URL pública na Netlify. Tudo em infraestrutura de plano gratuito com uso comercial permitido.
 
 ## Pré-requisitos
 
@@ -18,8 +18,8 @@ Este guia parte do zero e leva um desenvolvedor até ter uma instância do DojoP
 ## 1. Clonar o repositório
 
 ```bash
-git clone git@github.com:klayverpaz/dojopay.git
-cd dojopay
+git clone git@github.com:klayverpaz/etherpay.git
+cd etherpay
 pnpm install
 ```
 
@@ -126,7 +126,7 @@ Se qualquer passo falhar, veja "Troubleshooting" abaixo.
 A Netlify detecta Next.js 14 automaticamente e provisiona o adapter (OpenNext) no build — **não é necessário instalar nenhum pacote no repositório**. O `netlify.toml` versionado já pina Node 20 e o comando de build.
 
 1. Acesse `https://app.netlify.com` → **Add new site → Import an existing project**.
-2. Autorize o GitHub e selecione o repositório `dojopay`.
+2. Autorize o GitHub e selecione o repositório `etherpay`.
 3. Netlify detecta Next.js automaticamente. Confirme ou ajuste:
    - **Build command:** `next build` (herdado do `netlify.toml`)
    - **Publish directory:** `.next` (herdado do `netlify.toml`)
@@ -134,7 +134,7 @@ A Netlify detecta Next.js 14 automaticamente e provisiona o adapter (OpenNext) n
 4. **Environment variables** — em **Site settings → Environment variables**, adicione para o escopo "All deploy contexts" (produção + previews):
    - `NEXT_PUBLIC_SUPABASE_URL` → URL do projeto Supabase remoto
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY` → anon key do projeto remoto
-   - `NEXT_PUBLIC_APP_URL` → URL final do deploy (ex.: `https://dojopay.netlify.app`). Atualize depois do primeiro deploy ou após configurar domínio customizado.
+   - `NEXT_PUBLIC_APP_URL` → URL final do deploy (ex.: `https://etherpay.netlify.app`). Atualize depois do primeiro deploy ou após configurar domínio customizado.
 5. Clique em **Deploy site**. O primeiro build leva ~3 minutos.
 6. Abra a URL publicada (formato `https://<nome-aleatorio>.netlify.app`) e rode o mesmo smoke-test do passo 4 — agora contra o Supabase remoto.
 
@@ -149,7 +149,7 @@ Depois do DNS propagar:
 - Atualize `NEXT_PUBLIC_APP_URL` nas environment variables da Netlify para a nova URL.
 - Em **Supabase → Authentication → URL Configuration**:
   - **Site URL:** a nova URL
-  - **Redirect URLs:** adicione ambos `https://dojopay.app/**` e `https://*.netlify.app/**` (wildcard cobre os previews).
+  - **Redirect URLs:** adicione ambos `https://etherpay.app/**` e `https://*.netlify.app/**` (wildcard cobre os previews).
 
 ## 8. Troubleshooting
 

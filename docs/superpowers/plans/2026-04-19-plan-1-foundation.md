@@ -1,8 +1,8 @@
-# DojoPay Plan 1 — Foundation, Auth, and Clients CRUD
+# EtherPay Plan 1 — Foundation, Auth, and Clients CRUD
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Stand up a deployable Next.js web app with Supabase auth and working Clientes (Clients) CRUD, so the user can sign up, sign in, and register/edit/archive clients. This is the first of four plans for DojoPay v1.
+**Goal:** Stand up a deployable Next.js web app with Supabase auth and working Clientes (Clients) CRUD, so the user can sign up, sign in, and register/edit/archive clients. This is the first of four plans for EtherPay v1.
 
 **Architecture:** Next.js 14 App Router on top of Supabase Postgres + Auth, with Row Level Security enforcing per-user data isolation. Pure-function domain services in `features/<domain>/services/` (TDD with Vitest); data mutations via server actions; reads via server components calling typed Supabase queries.
 
@@ -23,7 +23,7 @@
 - WhatsApp template, attachments, reports, settings (Plan 3)
 - Daily reminder email, PWA, i18n wiring, feature gate, Cloudflare Pages deployment, setup guide (Plan 4)
 
-**Reference spec:** `docs/superpowers/specs/2026-04-19-dojopay-design.md`
+**Reference spec:** `docs/superpowers/specs/2026-04-19-etherpay-design.md`
 
 **Conventions used throughout this plan:**
 
@@ -39,27 +39,27 @@
 
 **Files:**
 
-- Create: `dojopay/package.json`, `dojopay/tsconfig.json`, `dojopay/next.config.mjs`, `dojopay/app/layout.tsx`, `dojopay/app/page.tsx`, `dojopay/.gitignore`, `dojopay/.nvmrc`
+- Create: `etherpay/package.json`, `etherpay/tsconfig.json`, `etherpay/next.config.mjs`, `etherpay/app/layout.tsx`, `etherpay/app/page.tsx`, `etherpay/.gitignore`, `etherpay/.nvmrc`
 
 - [ ] **Step 1: Rename working directory if needed**
 
-If the current working directory is `reminder_proj` (the pre-naming working folder) and not yet `dojopay`, rename it now:
+If the current working directory is `reminder_proj` (the pre-naming working folder) and not yet `etherpay`, rename it now:
 
 ```bash
 cd /Users/klayver/Repositories
-mv reminder_proj dojopay
-cd dojopay
+mv reminder_proj etherpay
+cd etherpay
 ```
 
-If the directory is already `dojopay`, skip this step.
+If the directory is already `etherpay`, skip this step.
 
 - [ ] **Step 2: Scaffold the Next.js app in-place**
 
 The directory already contains `docs/` and `.superpowers/`. `create-next-app` requires an empty destination, so move these aside temporarily:
 
 ```bash
-mv docs /tmp/dojopay-docs
-mv .superpowers /tmp/dojopay-superpowers 2>/dev/null || true
+mv docs /tmp/etherpay-docs
+mv .superpowers /tmp/etherpay-superpowers 2>/dev/null || true
 ```
 
 Scaffold Next.js into the current (now empty) directory:
@@ -78,8 +78,8 @@ pnpm dlx create-next-app@14 . \
 Restore docs and any brainstorm artifacts:
 
 ```bash
-mv /tmp/dojopay-docs docs
-[ -d /tmp/dojopay-superpowers ] && mv /tmp/dojopay-superpowers .superpowers
+mv /tmp/etherpay-docs docs
+[ -d /tmp/etherpay-superpowers ] && mv /tmp/etherpay-superpowers .superpowers
 ```
 
 Expected: `package.json`, `tsconfig.json`, `app/layout.tsx`, `app/page.tsx`, `tailwind.config.ts` now exist alongside the preserved `docs/` and `.superpowers/` directories.
@@ -104,7 +104,7 @@ git commit -m "chore: scaffold next.js app"
 - [ ] **Step 5: Connect to the GitHub remote**
 
 ```bash
-git remote add origin https://github.com/klayverpaz/dojopay.git
+git remote add origin https://github.com/klayverpaz/etherpay.git
 git push -u origin main
 ```
 
@@ -1263,7 +1263,7 @@ import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "DojoPay",
+  title: "EtherPay",
   description: "Gerencie cobranças recorrentes de forma simples.",
 };
 
@@ -1586,7 +1586,7 @@ import { Button } from "@/components/ui/button";
 export function TopBar({ email }: { email: string }) {
   return (
     <header className="flex items-center justify-between border-b px-4 py-3">
-      <span className="font-semibold">DojoPay</span>
+      <span className="font-semibold">EtherPay</span>
       <div className="flex items-center gap-3">
         <span className="text-sm text-muted-foreground">{email}</span>
         <form action={signOut}>

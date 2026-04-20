@@ -66,9 +66,9 @@ export function SideNav({ userLabel }: { userLabel?: { name: string; plan: strin
     >
       <div className="flex items-center gap-2.5 px-2 pb-4 pt-1">
         <div className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-primary text-sm font-bold text-primary-foreground">
-          DP
+          EP
         </div>
-        <span className="text-sm font-bold tracking-tight">DojoPay</span>
+        <span className="text-sm font-bold tracking-tight">EtherPay</span>
       </div>
       <div className="flex flex-col gap-0.5">
         {ITEMS.map((item) => {
